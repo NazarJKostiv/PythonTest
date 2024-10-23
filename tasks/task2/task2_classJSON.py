@@ -22,6 +22,9 @@ class JSONProcessor:
             cls._instance = cls.__create_object(json_to_parse)
         return cls._instance
 
+    def __repr__(self):
+        return str(self.__dict__)
+
     @classmethod
     def get_instance(cls):
         return cls._instance
@@ -56,13 +59,17 @@ class JSONProcessor:
 
     @classmethod
     def write_json_file(cls, filename):
-        file = open(filename, "w")
+        try:
+            file = open(filename, "w")
+            if isinstance(cls.get_instance(), list):
+                file.write(json.dumps([obj.__dict__ for obj in cls.get_instance()], indent=4))
+            else:
+                file.write(json.dumps(cls._instance.__dict__, indent=4))
+        except FileNotFoundError as e:
+            print(f"ERROR while searching the file: '{e.strerror}' | File Name: {e.filename}")
+            # raise(Exception(f"ERROR while searching the file: '{e.strerror}' | File Name: {e.filename}"))
 
-        if isinstance(cls.get_instance(), list):
-            file.write(json.dumps([obj.__dict__ for obj in cls.get_instance()], indent=4))
 
-        else:
-            file.write(json.dumps(cls._instance.__dict__, indent=4))
 
     @classmethod
     def convert_to_object(cls):
@@ -92,19 +99,24 @@ JSONProcessor.load_json_file(FILE_NOT_JSON_PATH)
 JSONProcessor.load_json_file(FILE_INCORRECT_JSON_PATH)
 
 JSONProcessor.load_json_file(FILE_JSON_LIST_PATH)
-
-JSONProcessor.load_json_file(FILE_JSON_LIST_PATH)
 JSONProcessor.convert_to_object()
-JSONProcessor.write_json_file("output_json_file_list.json")
+#JSONProcessor.write_json_file("output_json_file_list.json")
+print(JSONProcessor.get_instance())
 JSONProcessor.change_date_format()
-JSONProcessor.write_json_file("output_json_file_list_date.json")
+print(JSONProcessor.get_instance())
+#JSONProcessor.write_json_file("output_json_file_list_date.json")
 JSONProcessor.remove_id_property()
-JSONProcessor.write_json_file("output_json_file_list_no_ID.json")
-
+print(JSONProcessor.get_instance())
+#JSONProcessor.write_json_file("output_json_file_list_no_ID.json")
 JSONProcessor.load_json_file(FILE_JSON_PATH)
 python_object = JSONProcessor.convert_to_object()
-JSONProcessor.write_json_file("output_json_file.json")
+print(JSONProcessor.get_instance())
+#JSONProcessor.write_json_file("output_json_file.json")
 JSONProcessor.remove_id_property()
-JSONProcessor.write_json_file("output_json_file_no_ID.json")
+print(JSONProcessor.get_instance())
+JSONProcessor.change_date_format()
+print(JSONProcessor.get_instance())
+
+#JSONProcessor.write_json_file("output_json_file_no_ID.json")
 
 kek = JSONProcessor.get_instance()
