@@ -50,7 +50,7 @@ class JSONProcessor:
             #raise(Exception(f"ERROR while searching the file: '{e.strerror}' | File Name: {e.filename}"))
         except json.JSONDecodeError as e:
             print(f"ERROR while decoding the file: '{e.msg}'| Error at line: {e.lineno} | Unable to decode following "
-                  f"content:'{e.doc}'")
+                  f"content:\n'{e.doc}'")
             #raise(Exception(f"ERROR while decoding the file: '{e.msg}'| Error at line: {e.lineno} | Unable to decode
             # following content:'{e.doc}'"))
         except Exception as e:
@@ -68,8 +68,6 @@ class JSONProcessor:
         except FileNotFoundError as e:
             print(f"ERROR while searching the file: '{e.strerror}' | File Name: {e.filename}")
             # raise(Exception(f"ERROR while searching the file: '{e.strerror}' | File Name: {e.filename}"))
-
-
 
     @classmethod
     def convert_to_object(cls):
@@ -91,8 +89,6 @@ class JSONProcessor:
         else:
             instance = cls.get_instance()
             instance.birth_date = datetime.strptime(instance.birth_date, "%m/%d/%Y").strftime("%Y-%m-%d")
-
-
 
 
 JSONProcessor.load_json_file(FILE_NOT_JSON_PATH)
