@@ -63,7 +63,7 @@ class JSONProcessor:
     @classmethod
     @modify_obj
     def get_instance(cls):
-        return cls._instance
+        return cls._get_instance()
 
     @classmethod
     def __create_object(cls, _object):
